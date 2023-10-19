@@ -1,14 +1,22 @@
 # SAT Solving
 
+## Pre-requirements
+- GCC
+
 ## Installation
-1. Clone CaDiCal into root folder
+1. Clone this repository
 ```
-cd SAT\ Solving/
+git clone https://github.com/schaedelbruch/satsolving.git
+```
+
+2. Clone CaDiCal into the root folder
+```
+cd satsolving
 
 git clone https://github.com/arminbiere/cadical.git
 ```
 
-2. Build CaDiCal library
+3. Build CaDiCal library
 ```
 cd cadical
 
