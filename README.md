@@ -37,4 +37,3 @@ g++ -o my_program path/to/my_program.cpp -I./cadical/src -L./cadical/build -l:li
 ```
 ./my_program
 ```
-
