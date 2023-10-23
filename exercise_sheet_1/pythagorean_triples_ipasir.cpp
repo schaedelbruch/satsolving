@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
-#include "../cadical/src/cadical.hpp"
+#include "../ipasir/sat/picosat961/ipasir.h"
+//#include "../cadical/src/ipasir.h"
 
 // Anzahl Variablen: n
 // Anzahl Triple: n * (n-1) * (n-2)
@@ -25,19 +26,19 @@ int main() {
         }
     }
 
-    CaDiCaL::Solver * solver = new CaDiCaL::Solver;
+    auto * solver = ipasir_init();
 
     for (const Triple& triple : triples) {
         if (triple.a * triple.a + triple.b * triple.b == triple.c * triple.c) {
-            solver->add(triple.a);
-            solver->add(triple.b);
-            solver->add(triple.c);
-            solver->add(0);
+            ipasir_add(solver, triple.a);
+            ipasir_add(solver, triple.b);
+            ipasir_add(solver, triple.c);
+            ipasir_add(solver, 0);
 
-            solver->add(-triple.a);
-            solver->add(-triple.b);
-            solver->add(-triple.c);
-            solver->add(0);
+            ipasir_add(solver, -triple.a);
+            ipasir_add(solver, -triple.b);
+            ipasir_add(solver, -triple.c);
+            ipasir_add(solver, 0);
 
             usedVars[triple.a - 1] = true;
             usedVars[triple.b - 1] = true;
@@ -45,12 +46,12 @@ int main() {
         }
     }
 
-    int result = solver->solve();
+    int result = ipasir_solve(solver);
 
     if (result == 10) {
         std::cout << "SAT: Lösung gefunden!" << std::endl;
         for (int i = 1; i <= n; i++) {
-            int value = solver->val(i);
+            int value = ipasir_val(solver, i);
             bool isUsed = usedVars[i-1];
             if (isUsed) {
                 if (value > 0) {
@@ -69,6 +70,6 @@ int main() {
         std::cout << "CaDiCal-Fehler: " << result << std::endl;
     }
 
-    delete solver;
+    ipasir_release(solver);
     return 0;
 }

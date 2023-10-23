@@ -37,3 +37,25 @@ g++ -o my_program path/to/my_program.cpp -I./cadical/src -L./cadical/build -l:li
 ```
 ./my_program
 ```
+
+## Exercise Sheet 1
+To compile and run the programs, it is necessary to install CaDiCal (follow the steps above).
+### 4) Pythagorean Triples
+1. Head to the project root
+```
+cd project/root/
+```
+2. Compile the Code
+```
+g++ -o pythagorean_triples exercise_sheet_1/pythagorean_triples.cpp -I./cadical/src -L./cadical/build -l:libcadical.a
+
+or
+
+g++ -o pythagorean_triples exercise_sheet_1/pythagorean_triples_ipasir.cpp -I./cadical/src -L./cadical/build -l:libcadical.a
+```
+3. Run the programm
+```
+./pythagorean_triples
+```
+
+The program requires an input of a number n for the length of the sequence to be checked, for example 1000. After the calculation, a coloring of the corresponding numbers is displayed. Negative variables in red, positive in green and all invalid or unused variables/numbers in white.

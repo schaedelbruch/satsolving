@@ -33,3 +33,6 @@
 
 # own
 /cadical
+/ipasir
+/.vscode
+*/sudokus

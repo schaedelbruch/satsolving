@@ -1,10 +1,11 @@
 #include <iostream>
 #include <vector>
-#include "../cadical/src/ipasir.h"
+#include "../cadical/src/cadical.hpp"
 
 // Anzahl Variablen: n
 // Anzahl Triple: n * (n-1) * (n-2)
-// Anzahl Pythagoranischer Triple: Abhängig von n und zutreffender Triple
+// Anzahl Pythagoranischer Triple m: Abhängig von n und zutreffender Triple
+// Anzahl Klauseln: m * 2
 
 struct Triple {
     int a, b, c;
@@ -25,32 +26,32 @@ int main() {
         }
     }
 
-    auto * solver = ipasir_init();
+    CaDiCaL::Solver * solver = new CaDiCaL::Solver;
 
     for (const Triple& triple : triples) {
         if (triple.a * triple.a + triple.b * triple.b == triple.c * triple.c) {
-            ipasir_add(solver, triple.a);
-            ipasir_add(solver, triple.b);
-            ipasir_add(solver, triple.c);
-            ipasir_add(solver, 0);
+            solver->add(triple.a);
+            solver->add(triple.b);
+            solver->add(triple.c);
+            solver->add(0);
 
-            ipasir_add(solver, -triple.a);
-            ipasir_add(solver, -triple.b);
-            ipasir_add(solver, -triple.c);
-            ipasir_add(solver, 0);
+            solver->add(-triple.a);
+            solver->add(-triple.b);
+            solver->add(-triple.c);
+            solver->add(0);
 
             usedVars[triple.a - 1] = true;
             usedVars[triple.b - 1] = true;
             usedVars[triple.c - 1] = true;
         }
     }
-
-    int result = ipasir_solve(solver);
+    int result = solver->solve();
 
     if (result == 10) {
         std::cout << "SAT: Lösung gefunden!" << std::endl;
         for (int i = 1; i <= n; i++) {
-            int value = ipasir_val(solver, i);
+            int value = solver->val(i);
+            std::cout << value << " ";
             bool isUsed = usedVars[i-1];
             if (isUsed) {
                 if (value > 0) {
@@ -69,6 +70,6 @@ int main() {
         std::cout << "CaDiCal-Fehler: " << result << std::endl;
     }
 
-    ipasir_release(solver);
+    delete solver;
     return 0;
 }
