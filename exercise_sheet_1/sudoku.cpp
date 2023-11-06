@@ -172,12 +172,14 @@ void solveSudoku() {
     delete solver;
 }
 
-int main() {
+int main(int argc, char* argv[]) {
+    if (argc < 1) {
+        std::cerr << "Bitte geben Sie mindestens einen Dateinamen als Argument an." << std::endl;
+        return 1;
+    }
+
     char buffer[PATH_MAX];
-    //std::string fileName = "puzzle03c.sudoku";
-    std::string fileName;
-    std::cout << "Geben Sie einen Dateinamen ein: ";
-    std::cin >> fileName;
+    std::string fileName = argv[1];
     std::string currentPath = getcwd(buffer, sizeof(buffer));
     std::string folderPath = currentPath + "/exercise_sheet_1/sudokus";    
     std::string filePath = folderPath + "/" + fileName;

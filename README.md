@@ -40,7 +40,7 @@ g++ -o my_program path/to/my_program.cpp -I./cadical/src -L./cadical/build -l:li
 
 ## Exercise Sheet 1
 To compile and run the programs, it is necessary to install CaDiCal (follow the steps above).
-### 4) Pythagorean Triples
+### Pythagorean Triples
 1. Head to the project root
 ```
 cd project/root/
@@ -59,3 +59,14 @@ g++ -o pythagorean_triples exercise_sheet_1/pythagorean_triples_ipasir.cpp -I./c
 ```
 
 The program requires an input of a number n for the length of the sequence to be checked, for example 1000. After the calculation, a coloring of the corresponding numbers is displayed. Negative variables in red, positive in green and all invalid or unused variables/numbers in white.
+
+### Sudoku Solver
+1. Place the Sudoku-Benchmarks folder unzipped in satsolving/exercise_sheet_1/
+2. Compile the Code
+```
+g++ -o sudoku_solver exercise_sheet_1/sudoku.cpp -I./cadical/src -L./cadical/build -l:libcadical.a
+```
+3. Run the programm
+```
+./sudoku_solver puzzle03a.sudoku
+```
